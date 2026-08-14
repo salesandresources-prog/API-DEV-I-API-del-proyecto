@@ -1,0 +1,25 @@
+
+ DOCUMENTACIÓN DE ENDPOINTS - PLATAFORMA DEV-I
+ Autor: Andrés Aguiar
+
+
+1. Autenticación de Usuario (Login)
+   - Endpoint: POST http://localhost/Api-DEVI/auth.php
+   - Descripción: Valida las credenciales de acceso del usuario desde la interfaz DEV-I.
+   - Parámetros de Entrada (JSON):
+     {
+       "usuario": "asher",
+       "contraseña": "0165"
+     }
+   - Respuesta Exitosa (200 OK):
+     {
+       "mensaje": "Autenticación satisfactoria."
+     }
+
+2. Gestión de Leads (Registro)
+   - Endpoint: POST http://localhost/Api-DEVI/leads.php
+   - Descripción: Registra un nuevo lead comercial en el sistema.
+
+3. Consulta de Leads (Listado)
+   - Endpoint: GET http://localhost/Api-DEVI/leads.php
+   - Descripción: Obtiene el listado general de leads registrados.

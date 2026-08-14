@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DEV-I - Device Engagement Virtual Interfaz</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-image: url('fondo.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #d4af37;
+            position: relative;
+        }
+        .header-title {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        .header-title h1 {
+            font-size: 26px;
+            letter-spacing: 4px;
+            color: #d4af37;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        .header-title p {
+            font-size: 10px;
+            letter-spacing: 2px;
+            color: #9ca3af;
+            text-transform: uppercase;
+        }
+        .login-card {
+            background: rgba(12, 12, 14, 0.88);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            padding: 35px 40px;
+            border-radius: 4px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8);
+            width: 100%;
+            max-width: 440px;
+            position: relative;
+        }
+        /* Esquinas estéticas de la tarjeta */
+        .login-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            width: 12px;
+            height: 12px;
+            border-top: 2px solid #d4af37;
+            border-left: 2px solid #d4af37;
+        }
+        .login-card::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            right: -2px;
+            width: 12px;
+            height: 12px;
+            border-bottom: 2px solid #d4af37;
+            border-right: 2px solid #d4af37;
+        }
+        .input-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        .input-group label {
+            display: block;
+            color: #d4af37;
+            margin-bottom: 8px;
+            font-size: 11px;
+            letter-spacing: 1.5px;
+            font-weight: 600;
+        }
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        .input-wrapper span {
+            position: absolute;
+            left: 12px;
+            color: #9ca3af;
+            font-size: 14px;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 12px 12px 12px 38px;
+            background: #050507;
+            border: 1px solid #27272a;
+            border-radius: 4px;
+            color: #fff;
+            font-size: 13px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .input-group input:focus {
+            border-color: #d4af37;
+        }
+        button {
+            width: 100%;
+            padding: 13px;
+            background: #d4af37;
+            border: none;
+            border-radius: 4px;
+            color: #0c0c0e;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background 0.2s;
+        }
+        button:hover {
+            background: #c5a028;
+        }
+        .forgot-password {
+            display: block;
+            text-align: center;
+            margin-top: 18px;
+            font-size: 12px;
+            color: #71717a;
+            text-decoration: none;
+        }
+        .forgot-password:hover {
+            color: #d4af37;
+        }
+        .footer-signature {
+            position: absolute;
+            bottom: 15px;
+            font-size: 10px;
+            letter-spacing: 3px;
+            color: #52525b;
+            text-transform: uppercase;
+        }
+        #mensaje-alerta {
+            margin-top: 15px;
+            font-size: 13px;
+            padding: 10px;
+            border-radius: 4px;
+            text-align: center;
+            display: none;
+        }
+        .error { 
+            background: rgba(239, 68, 68, 0.2); 
+            color: #f87171; 
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+        .success { 
+            background: rgba(34, 197, 94, 0.2); 
+            color: #4ade80; 
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-title">
+        <h1>DEV-I</h1>
+        <p>Device Engagement Virtual Interfaz</p>
+    </div>
+
+    <div class="login-card">
+        <form id="loginForm" onsubmit="enviarLogin(event)">
+            <div class="input-group">
+                <label for="usuario">CORREO O USUARIO</label>
+                <div class="input-wrapper">
+                    <span>✉</span>
+                    <input type="text" id="usuario" required placeholder="usuario o correo">
+                </div>
+            </div>
+            
+            <div class="input-group">
+                <label for="contraseña">CONTRASEÑA</label>
+                <div class="input-wrapper">
+                    <span>🔒</span>
+                    <input type="password" id="contraseña" required placeholder="••••••••">
+                </div>
+            </div>
+            
+            <button type="submit">INGRESAR &rarr;</button>
+        </form>
+
+        <a href="#" class="forgot-password">¿Olvidaste tu contraseña?</a>
+
+        <div id="mensaje-alerta"></div>
+    </div>
+
+    <div class="footer-signature">
+        Developed by Andrés Aguiar
+    </div>
+
+    <script>
+        async function enviarLogin(event) {
+            event.preventDefault();
+
+            const usuarioVal = document.getElementById('usuario').value;
+            const passwordVal = document.getElementById('contraseña').value;
+            const alertaBox = document.getElementById('mensaje-alerta');
+
+            try {
+                const response = await fetch('auth.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        usuario: usuarioVal,
+                        contraseña: passwordVal
+                    })
+                });
+
+                const data = await response.json();
+                
+                alertaBox.style.display = 'block';
+                if (response.ok) {
+                    alertaBox.className = 'success';
+                    alertaBox.textContent = data.mensaje;
+                } else {
+                    alertaBox.className = 'error';
+                    alertaBox.textContent = data.mensaje;
+                }
+            } catch (error) {
+                alertaBox.style.display = 'block';
+                alertaBox.className = 'error';
+                alertaBox.textContent = 'Error de conexión con el servidor.';
+            }
+        }
+    </script>
+
+</body>
+</html>
